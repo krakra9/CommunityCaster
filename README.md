@@ -4,7 +4,7 @@
 - Monthy fee is pooled together and only accesaable by community vote
 - Person can post a porposal
 - all is done through farcaster frames and MACI infactstrucutre for avoiding colusion
-- SmartContract logic is hosted on Arbitrum Nova(think it's better than one for our usecase because it's cheaper)
+- SmartContract logic is hosted on Arbitrum Nova(think it's better than one for our usecase because it's ceaper)
 
 #### Sign Up
 User signes up (SAFE makes them a Web3 Account using Pimloco and permisonless.js).
