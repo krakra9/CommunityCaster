@@ -6,6 +6,7 @@ import LoginForm from "./components/Login.js";
 import Logout from "./components/Logout.js";
 import UserInfo from "./components/UserInfo.js";
 import Footer from "./components/Footer.js";
+import MyButton from "./components/MyButton.js";
 
 function App() {
   const [user, setUser] = useState();
@@ -32,6 +33,10 @@ function App() {
       });
   }, []);
 
+  const handleButtonClick = () => {
+    alert("Transaction was made!");
+  };
+
   return (
     <>
       <Header />
@@ -41,6 +46,7 @@ function App() {
         ) : user?.issuer ? (
           <div className="user-container">
             <UserInfo userInfo={user} />
+            <MyButton text="Click Me" onClick={handleButtonClick} />
             <Logout setUser={setUser} />
           </div>
         ) : (
