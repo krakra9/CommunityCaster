@@ -23,3 +23,10 @@ To join the channel you need to set up monthly paymetnes. <- SAFE has a way of m
 
 
 
+
+# Latest Thinking
+1. When a button is pressed in the frame, the frame server takes the button id and the FID.
+2. It maps the button to an approve or reject and fid to the ETH wallet through the fir registry.
+3. Meanwhile, in an Arbitrum smart contract we wrtie to a PollMap(address -> Choice);
+4. Wait until Specified Decision blockHeight and the NODE signs a multisig transaction for moving funds from vault to propser.
+5. Proposer Makes a call to Vault contract and makes IT provide the second signitrue for moving the funds to the proposers account.
