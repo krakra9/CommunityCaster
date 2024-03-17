@@ -1,49 +1,31 @@
-# Custom UI Email Login with Magic Dedicated Wallet and One-Time Password (OTP)
+# Official Readme
+1. This is the infrastrucure for a community app which uses farcaster frames.
+2. Each community has it's own vault (SAFE Smart Account) in which they hold their funds. <- Example instance of Vault Contract exists on the Arbitrum network at address: arb:0x26Ef58BBBB086D6c2DEdebfAD6FFd10c80Ca70Aa 
+3. When a user signs up, we create a SAFE for their wallet, which is controlled through account abstraction using Magic.
+4. Voting to spend the funds in the volt happens through interacting with a FRAME on FARCASTER.
+    - In FRAME_NODE is the code which runs a node.js server which hosts all frames (currently just 1 example frame)
+    - When a user votes (clicks reject/approve) on the frame, the server maps his fid to an ethereum address and records it and his vote direction in a Poll (an ARBITRUM STYLUS contract). 
+    - That Poll contract which is deployed by a SAFE_MODULE is responsible for triggering a function in the safe_module to release the funds to the Poll proposer.
 
-Magic is a passwordless authentication sdk that supports passwordless email login via one-time passwords (OTP). This app will walk through implementing logins via email with OTP using your own UI.
+# CommunityCaster
+- Account abstraction using Magic to creating an acocunt for the app.
+- User can join a community -> They will pay a monthly fee
+- Monthy fee is pooled together and only accesaable by community vote
+- Person can post a porposal
+- all is done through farcaster frames and MACI infactstrucutre for avoiding colusion
+- SmartContract logic is hosted on Arbitrum Nova(think it's better than one for our usecase because it's ceaper)
 
-> 🌐 **Live Demo → https://b2gzt5.csb.app/**
+#### Sign Up
+User signes up (SAFE makes them a Web3 Account using Pimloco and permisonless.js).
+Create a farcaster account for users(somehow associate with SAFE smart account??)
 
-# Quick Start Instructions
+#### Join/Create Community
+Community is a farcaster channel. (how does Warpcast do this with their channels?)
+To join the channel you need to set up monthly paymetnes. <- SAFE has a way of making this web2 friendly
 
-```
-$ git clone git@github.com:magiclabs/example-custom-email-otp.git
-$ cd example-custom-email-otp
-$ yarn install
-$ yarn start
-```
-
-> app starts on http://localhost:3000
-
-## Environment Variables
-
-Replace the API keys in `.env` with your own:
-
-```
-REACT_APP_MAGIC_PUBLISHABLE_KEY=pk_live_123...
-```
-
-## Event Handling
-
-There are two flows demonstrated in this app for which events must be handled to successfully authenticate a user. The main flow is the login flow, the other is the device verification flow.
-
-## Events
-
-**Email OTP**
-
-| Event Name          | Definition                                                                      |
-| ------------------- | ------------------------------------------------------------------------------- |
-| `email-otp-sent`    | Dispatched when the OTP email has been successfully sent from the Magic server. |
-| `verify-email-otp`  | Emit along with the OTP to verify the code from user.                           |
-| `invalid-email-otp` | Dispatched when the OTP sent fails verification.                                |
-| `cancel`            | Emit to cancel the login request.                                               |
-
-**Device Verification**
-
-| Event Name                         | Definition                                                             |
-| ---------------------------------- | ---------------------------------------------------------------------- |
-| `device-needs-approval`            | Dispatched when the device is unrecognized and requires user approval. |
-| `device-verification-email-sent`   | Dispatched when the device verification email is sent.                 |
-| `device-approved`                  | Dispatched when the user has approved the unrecongized device.         |
-| `device-verification-link-expired` | Dispatched when the email verification email has expired.              |
-| `device-retry`                     | Emit to restart the device registration flow.                          |
+#### Propose an event
+- User writes a proposal and suggests a price for doing what they porpose (eg: Organise a webinar with someone famous in the field).
+- Users see proposal as a farcaster frame and can vote on it (MACI infrastructure in the backend) 
+    - For the proposal to go through: 
+        (Monthly Fee) * (Approvers-Rejectors) >= proposal price;
+- Frames interact with a smartcontract deployed on Arbitrum 
